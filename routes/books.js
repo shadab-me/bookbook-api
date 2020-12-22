@@ -1,8 +1,6 @@
 const express = require("express");
-const { route } = require(".");
-const books = require("../models/books");
 const router = express.Router();
-const Books = require("../models/books");
+const Books = require("../models/Books");
 
 router.get("/", (req, res) => {
   Books.find({}, (err, books) => {
@@ -18,7 +16,6 @@ router.post("/new", (req, res) => {
     author: req.body.author,
     category: req.body.category,
   };
-  console.log("Nice");
   Books.create(bookInfo, (err, book) => {
     if (err) next(err);
     res.status(201).send("Done");
