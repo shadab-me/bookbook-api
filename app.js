@@ -4,10 +4,16 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
-mongoose.connect("");
+mongoose.connect("mongodb://127.0.0.1:27017/bookstore-api", (err, result) => {
+  if (err) next(err);
+  else {
+    console.log("connected successfully...");
+  }
+});
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+const booksRouter = require("./routes/books");
 
 var app = express();
 
@@ -21,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/api/books", booksRouter);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
